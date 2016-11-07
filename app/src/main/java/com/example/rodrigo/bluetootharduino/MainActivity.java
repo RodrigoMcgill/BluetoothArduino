@@ -20,7 +20,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.Set;
 import java.util.UUID;
-
+//Rodrigo : I repaired android
 public class MainActivity extends ActionBarActivity {
 
     TextView txtV = null;
