@@ -26,18 +26,19 @@ public class LEDActivity extends AppCompatActivity {
         Intent myIntent = getIntent();
         myDevice = getIntent().getExtras().getParcelable("BTdeviceName");
         connThread = new ConnectThread(myDevice);
-        System.out.println("calling connThread");
+
         connThread.start();
         led();
     }
-
+    /*
+    Function that handles pushed buttons to turn on and turn off LEDs
+    */
     public  void led(){
         System.out.println("led class called");
 
-
         buttonLedON.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {   //ON button
                 try {
                     System.out.println("Turn on");
                     connThread.ledON();
@@ -47,7 +48,7 @@ public class LEDActivity extends AppCompatActivity {
             }
         });
 
-        buttonLedOFF.setOnClickListener(new View.OnClickListener() {
+        buttonLedOFF.setOnClickListener(new View.OnClickListener() {  //OFF button
             @Override
 
             public void onClick(View v) {
@@ -61,7 +62,7 @@ public class LEDActivity extends AppCompatActivity {
         });
     }
 
-/*
+/*  Beta function to send more information. This is used if we want to do more than just turning an LED ON and OFF
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

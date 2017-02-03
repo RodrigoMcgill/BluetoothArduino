@@ -48,16 +48,14 @@ class ConnectThread extends Thread{
         }catch (IOException e){
             System.out.println("tmp did not connect!");
         }
-        System.out.println("Connecting mmSocket to tmp");
-        mmSocket = tmp;
+        mmSocket = tmp; //create new socket
     }
 
     public void run(){
         System.out.println("Everything went alright. Device passed should be the same : " + mmDevice.getName());
+        //attemps to connect with BT module
         try {
-            System.out.println("Attempting to connect with socket");
             mmSocket.connect();
-            System.out.println("Socket connected");
         } catch (IOException connectException) {
             try {
                 mmSocket.close();

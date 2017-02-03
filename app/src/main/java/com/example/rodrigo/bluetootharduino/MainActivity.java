@@ -22,7 +22,6 @@ import java.util.Set;
 import java.util.UUID;
 //Rodrigo : I repaired android
 public class MainActivity extends ActionBarActivity {
-
     TextView txtV = null;
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothDevice myDevice;
@@ -35,9 +34,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BluetoothDevice mDevice = null;
-        //start
 
-        myButtonStart = (Button)findViewById(R.id.buttonStart);
+        myButtonStart = (Button)findViewById(R.id.buttonStart);  //starts the first steps of BT protocols
         myButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,23 +50,19 @@ public class MainActivity extends ActionBarActivity {
                 Intent intent = new Intent(MainActivity.this, LEDActivity.class);
                 intent.putExtra("BTdeviceName", myDevice);
                 startActivity(intent);
-
-                /*
-                ConnectThread connThread = new ConnectThread(myDevice);
-                mBluetoothAdapter.cancelDiscovery();
-                connThread.start();
-                */
                 mBluetoothAdapter.cancelDiscovery();
             }
         });
 
     }
-
+   /*
+   function that finds actively devices a proximity
+    */
     private void findBT() {
-        //checks that device supports bluetooth
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
-            txtV.setText("You're Device does Not Support Bluetooth");
+            txtV.setText("The current  Device does not Support Bluetooth");
+            for (int time=0;time < 5000 ;time++){};
             finish();
         }
         //ask user to turn on bluetooth
@@ -78,44 +72,18 @@ public class MainActivity extends ActionBarActivity {
             startActivity(discoverableIntent);
         }
 
-        //acquiring all bluetooth available devices and make a SET
+        //acquiring all bluetooth available devices and make a SET. Hardcoded name for HC-05
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-
         if (pairedDevices.size() > 0) {
             for(BluetoothDevice device: pairedDevices){
                 System.out.println("Printing device: "+ device.getName());
                 System.out.println("Printing address: "+ device.getAddress());
-                if(device.getName().equals("HC-05")){
+                if(device.getName().equals("HC-05")){  //the name can be change to target any Bluetooth module
                     condition = true;
                     myDevice = device;
-
                     break;
                 }
             }
         }
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    */
 }
